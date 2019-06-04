@@ -1,8 +1,10 @@
-<html>
-<head>
-    <title>Blog - post list</title>
-</head>
-<body>
-    <p>This is supposed to be my first blog post</p>
-</body>
-</html>
+{% extends 'blog/base.html' %}
+
+{% block content %}
+        {% for post in posts %}
+        <h3><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }} </a></h3>
+        <p>Published on {{ post.published_date|default:"unknown" }} by {{ post.author }} </p>
+        <p> {{ post.text|linebreaksbr }}</p>
+        <hr>
+        {% endfor %}
+{% endblock %}
