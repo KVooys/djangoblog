@@ -18,7 +18,11 @@ https://tutorial.djangogirls.org/en/
 6) Login to http://127.0.0.1:8000/admin/ with your superuser account, then go back to the homepage. 
 7) You can now add and edit posts!
 
-Alternatively, run the Dockerized version using the Dockerfile.
+Alternatively, run the Dockerized version using the Dockerfile:
+
+1) docker build -t djangoblog:v1.0 .
+2) docker run -d -p 8000:8000 --name djangoblog djangoblog:v1.0 
+3) To create a superuser inside the container: docker exec -ti djangoblog bash; python3 manage.py createsuperuser; enter your credentials
     
 ### Features:
  
