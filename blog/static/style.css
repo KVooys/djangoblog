@@ -18,3 +18,11 @@ h1, h2, h3 {
     color: white;
     background-color: #000149;
 }
+
+#heart {
+    color: #F700D2;
+}
+
+#footer {
+    text-align:center;
+}
