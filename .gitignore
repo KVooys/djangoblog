@@ -2,5 +2,5 @@
 __pycache__
 db.sqlite3
 /static
-.DS_Store
 .idea
+base_site/db.json

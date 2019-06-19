@@ -27,13 +27,15 @@ Alternatively, run the Dockerized version using the Dockerfile:
 ### Features:
  
 - Homepage with blog posts in order, newest on top
-- Creating blog posts
-- Access & edit blog post data
+- Creating blog posts with POST API (or by logging in)
+- Access & edit blog posts
+- Uses PostgreSQL database
+- Decoupled config variables from code
+- Use environment variables or a text file to connect to your PostgreSQL database
 
 ### TODO:
 
 - Feature: add tags to blog posts
 - Feature: login/register from the front-end
 - Feature: leave comments on posts
-- Improvement: Decouple config variables from code
 - Improvement: use filters or search to find specific posts

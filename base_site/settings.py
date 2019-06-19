@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import json
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -74,12 +75,34 @@ WSGI_APPLICATION = 'base_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+
+# Improvement; allows to set env variables for db creds, or store them in a small JSON file
+if os.environ.get("DB_USER") is not None and os.environ.get("DB_PASSWORD") is not None \
+        and os.environ.get("DB_HOST") is not None and os.environ.get("DB_NAME") is not None:
+    db_name = os.environ.get("DB_NAME")
+    db_user = os.environ.get("DB_USER")
+    db_password = os.environ.get("DB_PASSWORD")
+    db_host = os.environ.get("DB_HOST")
+
+else:
+    with open("base_site/db.json") as file:
+        jsonfile = json.load(file)
+        db_name = jsonfile['DB_NAME']
+        db_user = jsonfile['DB_USER']
+        db_password = jsonfile['DB_PASSWORD']
+        db_host = jsonfile['DB_HOST']
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': db_name,
+        'USER': db_user,
+        'PASSWORD': db_password,
+        'HOST': db_host,
+        'PORT': '5432',
     }
 }
+
 
 
 # Password validation
