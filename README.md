@@ -30,8 +30,7 @@ Alternatively, run the Dockerized version using the Dockerfile:
 - Creating blog posts with POST API (or by logging in)
 - Access & edit blog posts
 - Uses PostgreSQL database
-- Decoupled config variables from code
-- Use environment variables or a text file to connect to your PostgreSQL database
+- Decoupled config variables from code using python-decouple
 
 ### TODO:
 
