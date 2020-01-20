@@ -30,7 +30,6 @@ Alternatively, run the Dockerized version using the Dockerfile:
 - Decoupled config variables from code using python-decouple
 - Login/register from the front-end
 
-
 ### Future ideas
 
 - Feature: add tags to blog posts
