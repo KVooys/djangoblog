@@ -1,6 +1,6 @@
 # official Python image
-FROM python:3.7-slim
-MAINTAINER www.github.com/KVooys/djangoblog
+FROM python:3.7-alpine
+LABEL MAINTAINER="www.github.com/KVooys/djangoblog"
 
 # create root directory for our project
 RUN mkdir /app
@@ -11,10 +11,16 @@ WORKDIR /app
 # Copy the current directory contents into the container
 ADD . /app/
 
+# Required for psycopg2
+RUN apk update && \
+    apk add --virtual build-deps gcc python-dev musl-dev && \
+    apk add postgresql-dev && \
+    apk add netcat-openbsd
+
 # Install any needed packages specified in requirements.txt
 RUN pip install -r requirements.txt
 
-# Run on port 8000 inside the container and outside
+# Run webserver on port 8000
 EXPOSE 8000
 
 # Run db migrations and start server

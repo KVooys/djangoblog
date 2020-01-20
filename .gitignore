@@ -1,6 +1,7 @@
+.vscode
 *.pyc
 __pycache__
-db.sqlite3
-/static
-.idea
 .env
+venv/
+staticfiles/
+djangoblog.sql

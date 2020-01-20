@@ -14,14 +14,14 @@
                 {% if user.is_authenticated %}
                 <a href="{% url 'post_new' %}"><i class="fa fa-plus"></i> New post</a>
                 {% else %}
-                <a href="/admin"><i class="fa fa-plus"></i> Login to create or edit posts</a>
+                <a href="/accounts/login"><i class="fa fa-plus"></i> Login to create or edit posts</a>
                 {% endif %}
             </div>
 
             <div class="container">
                 {% block content %}
                 {% endblock %}
-                <h5 id="footer">Made with <i class="fa fa-heart" id="heart"></i> in <a href="https://www.djangoproject.com/">Django</a> and <a href="https://www.postgresql.org/">PostgreSQL</a></h5>
+                <h5 id="footer">Made with <i class="fa fa-heart" id="heart"></i> by Kurt Vooys in <a href="https://www.djangoproject.com/">Django</a></h5>
             </div>
         </div>
 </body>
