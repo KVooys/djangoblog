@@ -2,10 +2,17 @@
 
 {% block content %}
 <h3><a href="">{{ post.title }}</a> </h3>
-<p>Published on {{ post.published_date|default:"unknown" }} by {{ post.author }}
+<p>Published on {{ post.created_date }} by {{ post.author }}
 <p> {{ post.text|linebreaksbr }}</p>
 {% if user.is_authenticated %}
 <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><i class="fa fa-edit"></i> Edit</a>
 {% endif %}
+<a class="btn btn-default" href="{% url 'post_comment' pk=post.pk %}"><i class="fa fa-commenting-o"></i> Comment</a>
+
 <hr>
+{% for comment in comments %}
+<p> {{ comment.author }} commented on {{ comment.created_date }}:</p>
+<p>{{ comment.text }}</p>
+{% endfor %}
+
 {% endblock %}

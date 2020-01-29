@@ -3,7 +3,7 @@
 {% block content %}
         {% for post in posts %}
         <h3><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }} </a></h3>
-        <p>Published on {{ post.published_date|default:"unknown" }} by {{ post.author }} </p>
+        <p>Published on {{ post.created_date }} by {{ post.author }} </p>
         <p> {{ post.text|linebreaksbr }}</p>
         <hr>
         {% endfor %}
