@@ -1,9 +1,10 @@
 {% extends 'blog/base.html' %}
+{% load humanize %}
 
 {% block content %}
-<h3><a href="">{{ post.title }}</a> </h3>
-<p>Published on {{ post.created_date }} by {{ post.author }}
-<p> {{ post.text|linebreaksbr }}</p>
+<h3>{{ post.title }}</h3>
+<h4>Published {{ post.created_date }} by {{ post.author }}</h4>
+<p> {{ post.text | linebreaksbr }}</p>
 {% if user.is_authenticated %}
 <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><i class="fa fa-edit"></i> Edit</a>
 {% endif %}
@@ -11,8 +12,9 @@
 
 <hr>
 {% for comment in comments %}
-<h5> {{ comment.author }} commented on {{ comment.created_date }}:</h5>
-<p>{{ comment.text|linebreaksbr }}</p>
+<h5> {{ comment.author }} commented {{ comment.created_date | naturaltime }}:</h5>
+<p>{{ comment.text | linebreaksbr }}</p>
+<hr>
 {% endfor %}
 
 {% endblock %}

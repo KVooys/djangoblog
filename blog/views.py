@@ -1,68 +1,78 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.utils import timezone
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import generic
 from .forms import PostForm, CommentForm
 from .models import Post, Comment
 
 # Create your views here.
 
-
-def post_list(request):
-    # order by reversed date, so newest post is on top
-    posts = Post.objects.filter(created_date__lte=timezone.now()).order_by(
-        "-created_date"
-    )
-    return render(request, "blog/post_list.html", {"posts": posts})
-
-
-def post_detail(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    comments = Comment.objects.filter(post_id=post).order_by("-created_date")
-    return render(
-        request, "blog/post_detail.html", {"post": post, "comments": comments}
-    )
+class PostListView(generic.ListView):
+    """
+    Post list, reverse sorted by date
+    """
+    model = Post
+    template_name = "blog/post_list.html"
+    context_object_name = "post_list"
+    queryset = Post.objects.order_by("-created_date")
+    paginate_by = 5
 
 
-def post_new(request):
-    if request.method == "POST":
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.save()
-            return redirect("post_detail", pk=post.pk)
-    else:
-        form = PostForm()
-        return render(request, "blog/post_edit.html", {"form": form})
+class PostDetailView(generic.DetailView):
+    """
+    A post and its comments, reverse sorted by date
+    """
+    model = Post
+    template_name = "blog/post_detail.html"
+    
+    def get_context_data(self, **kwargs):
+        # Get context
+        context = super(PostDetailView, self).get_context_data(**kwargs)
+        
+        # Get the post id from the "pk" URL parameter and add it to the context
+        context['comments'] = Comment.objects.filter(post_id=self.kwargs['pk']).order_by("-created_date")
+        return context
+
+class PostCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Post
+    template_name ="blog/post_edit.html"
+    fields = ["title", "text"]
+
+    def form_valid(self, form):
+        # Add user as author to post
+        form.instance.author = self.request.user
+        return super(PostCreateView, self).form_valid(form)
+
+    def get_success_url(self): 
+        return reverse("post_list")
 
 
-def post_edit(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    if request.method == "POST":
-        form = PostForm(request.POST, instance=post)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.save()
-            return redirect("post_detail", pk=post.pk)
-    else:
-        form = PostForm(instance=post)
-        return render(request, "blog/post_edit.html", {"form": form})
+class PostUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Post
+    template_name = "blog/post_edit.html"
+    fields = ["title", "text"]
+
+    def get_success_url(self): 
+        return reverse("post_detail", kwargs={'pk': self.kwargs['pk']})
 
 
-def post_comment(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    if request.method == "POST":
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            # Add post_id as foreign key
-            form.instance.post_id = pk
-            comment = form.save()
-            return redirect("post_detail", pk=pk)
-    else:
-        form = CommentForm()
-        return render(request, "blog/post_comment.html", {"form": form, "post": post})
+class CommentCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Comment
+    template_name ="blog/post_comment.html"
+    fields = ["author", "text"]
+    
+    def get_context_data(self, **kwargs):
+        # Get context
+        context = super(CommentCreateView, self).get_context_data(**kwargs)
+        
+        # Get the post id from the "pk" URL parameter and add it to the context
+        context['post'] = Post.objects.filter(id=self.kwargs['pk']).get()
+        return context
+
+    def get_success_url(self): 
+        return reverse("post_detail", kwargs={'pk': self.kwargs['pk']})
 
 
 def register(request):

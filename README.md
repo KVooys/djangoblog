@@ -24,17 +24,17 @@ Alternatively, run the Dockerized version using the Dockerfile:
 ### Features
  
 - Homepage with blog posts in order, newest on top
-- Creating blog posts with POST API (or by logging in)
+- Create blog posts through form
 - Access & edit blog posts
 - Uses PostgreSQL database
 - Decoupled config variables from code using python-decouple
 - Login/register from the front-end
 - Feature: leave comments on posts
+- Feature: add [humanized](https://docs.djangoproject.com/en/3.0/ref/contrib/humanize/) dates & timestamps for comments (ie. x minutes ago): 
+
 
 ### Future ideas
 
 - Feature: add tags to blog posts
-- Feature: add humanized dates & timestamps: https://docs.djangoproject.com/en/3.0/ref/contrib/humanize/
 - Improvement: use filters or search to find specific posts
-
-
+- Improvement: add a nice editor when creating blogposts, like [PageDown](https://github.com/timmyomahony/django-pagedown)
