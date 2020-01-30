@@ -29,10 +29,12 @@ Alternatively, run the Dockerized version using the Dockerfile:
 - Uses PostgreSQL database
 - Decoupled config variables from code using python-decouple
 - Login/register from the front-end
+- Feature: leave comments on posts
 
 ### Future ideas
 
 - Feature: add tags to blog posts
-- Feature: leave comments on posts
+- Feature: add humanized dates & timestamps: https://docs.djangoproject.com/en/3.0/ref/contrib/humanize/
 - Improvement: use filters or search to find specific posts
-- Improvement: prettify menu for login/register
+
+

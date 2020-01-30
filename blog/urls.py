@@ -9,7 +9,6 @@ urlpatterns = [
     path("post/<int:pk>", views.post_detail, name="post_detail"),
     path("post/<int:pk>/edit/", views.post_edit, name="post_edit"),
     path("post/<int:pk>/comment/", views.post_comment, name="post_comment"),
-    
     # user paths
     path("register/", views.register, name="register"),
     path("login/", auth_views.LoginView, name="login"),

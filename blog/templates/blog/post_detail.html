@@ -11,8 +11,8 @@
 
 <hr>
 {% for comment in comments %}
-<p> {{ comment.author }} commented on {{ comment.created_date }}:</p>
-<p>{{ comment.text }}</p>
+<h5> {{ comment.author }} commented on {{ comment.created_date }}:</h5>
+<p>{{ comment.text|linebreaksbr }}</p>
 {% endfor %}
 
 {% endblock %}

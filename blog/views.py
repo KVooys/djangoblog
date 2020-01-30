@@ -18,10 +18,10 @@ def post_list(request):
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    comments = Comment.objects.filter(post_id=post).order_by(
-        "-created_date"
+    comments = Comment.objects.filter(post_id=post).order_by("-created_date")
+    return render(
+        request, "blog/post_detail.html", {"post": post, "comments": comments}
     )
-    return render(request, "blog/post_detail.html", {"post": post, "comments": comments})
 
 
 def post_new(request):
@@ -57,7 +57,7 @@ def post_comment(request, pk):
         form = CommentForm(request.POST)
         if form.is_valid():
             # Add post_id as foreign key
-            form.instance.post_id=pk
+            form.instance.post_id = pk
             comment = form.save()
             return redirect("post_detail", pk=pk)
     else:
