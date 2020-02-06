@@ -1,10 +1,14 @@
 {% extends 'blog/base.html' %}
 
+{% block extra_head %}%
+    {% load markdown_deux_tags %}
+{% endblock %}
+
 {% block content %}
         {% for post in post_list %}
         <h3><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }} </a></h3>
         <p>Published {{ post.created_date }} by {{ post.author }} </p>
-        <p> {{ post.text | linebreaksbr }}</p>
+        <p> {{ post.text | markdown }}</p>
         <hr>
         {% endfor %}
 

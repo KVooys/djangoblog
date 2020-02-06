@@ -31,10 +31,9 @@ Alternatively, run the Dockerized version using the Dockerfile:
 - Login/register from the front-end
 - Feature: leave comments on posts
 - Feature: add [humanized](https://docs.djangoproject.com/en/3.0/ref/contrib/humanize/) dates & timestamps for comments (ie. x minutes ago): 
-
+- Improvement: added a nice editor when creating blogposts, I used StackOverflow's [PageDown](https://github.com/timmyomahony/django-pagedown)
 
 ### Future ideas
 
 - Feature: add tags to blog posts
 - Improvement: use filters or search to find specific posts
-- Improvement: add a nice editor when creating blogposts, like [PageDown](https://github.com/timmyomahony/django-pagedown)

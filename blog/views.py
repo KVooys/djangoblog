@@ -38,7 +38,7 @@ class PostDetailView(generic.DetailView):
 class PostCreateView(LoginRequiredMixin, generic.CreateView):
     model = Post
     template_name ="blog/post_edit.html"
-    fields = ["title", "text"]
+    form_class = PostForm
 
     def form_valid(self, form):
         # Add user as author to post
@@ -52,24 +52,21 @@ class PostCreateView(LoginRequiredMixin, generic.CreateView):
 class PostUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Post
     template_name = "blog/post_edit.html"
-    fields = ["title", "text"]
+    form_class = PostForm
 
     def get_success_url(self): 
         return reverse("post_detail", kwargs={'pk': self.kwargs['pk']})
 
 
-class CommentCreateView(LoginRequiredMixin, generic.CreateView):
+class CommentCreateView(generic.CreateView):
     model = Comment
     template_name ="blog/post_comment.html"
-    fields = ["author", "text"]
+    form_class = CommentForm
     
-    def get_context_data(self, **kwargs):
-        # Get context
-        context = super(CommentCreateView, self).get_context_data(**kwargs)
-        
-        # Get the post id from the "pk" URL parameter and add it to the context
-        context['post'] = Post.objects.filter(id=self.kwargs['pk']).get()
-        return context
+    def form_valid(self, form):
+        # Add post ID to comment
+        form.instance.post_id = Post.objects.filter(id=self.kwargs['pk']).get().id
+        return super(CommentCreateView, self).form_valid(form)
 
     def get_success_url(self): 
         return reverse("post_detail", kwargs={'pk': self.kwargs['pk']})

@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "pagedown.apps.PagedownConfig",
+    "markdown_deux",
     "blog",
 ]
 
