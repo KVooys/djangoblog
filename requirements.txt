@@ -7,7 +7,7 @@ Django==3.0.3
 django-markdown-deux==1.0.5
 django-pagedown==2.0.3
 gunicorn==19.9.0
-markdown2==2.3.8
+markdown2==2.3.9
 pathspec==0.7.0
 pkg-resources==0.0.0
 psycopg2==2.8.3
